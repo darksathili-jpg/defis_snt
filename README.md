@@ -1,34 +1,66 @@
-### 1. Titre et Introduction
-Commencez par un titre accrocheur et une brève description du contexte.
-* **Titre :** 🏙️ Défis Numérique Urbain - Cellule de Crise de Numéropolis.
-* **Description :** Présentation d'une simulation d'un écosystème urbain connecté. L'objectif est de gérer une alerte incendie en mobilisant les différents thèmes des Sciences Numériques et Technologie (SNT).
+# 🏙️ Défis Numérique Urbain | SNT Seconde
 
-### 2. Objectifs du Projet
-Listez ce que ce défi permet de réviser ou de mettre en pratique :
-* **Localisation :** Comprendre la triangulation GPS.
-* **Photo numérique :** Maîtriser l'encodage des pixels et des couleurs.
-* **Internet :** Simuler la circulation de paquets de données (protocoles TCP/IP).
-* **Web et Données :** Créer des structures de pages (HTML) et manipuler des fichiers de données (CSV).
-* **Réseaux Sociaux :** Analyser des graphes de relations.
-* **Informatique embarquée :** Programmer des capteurs et actionneurs pour la ville intelligente.
+[![SNT](https://img.shields.io/badge/Thème-SNT%20Seconde-blueviolet)](https://eduscol.education.fr/1660/sciences-numeriques-et-technologie-en-classe-de-seconde)
+[![Mode](https://img.shields.io/badge/Mode-100%25%20Débranché-orange)](#)
+[![Durée](https://img.shields.io/badge/Durée-1h30-green)](#)
 
-### 3. Scénario de la simulation
-Résumez l'intrigue pour donner du contexte au lecteur :
-* Un incendie est détecté dans le quartier Nord de Numéropolis.
-* Le groupe doit agir en tant que "cellule de crise numérique" pour localiser le sinistre, transmettre l'information et coordonner les secours.
+> **Simulation d'une cellule de crise à Numéropolis.** > Ce projet documente la résolution d'une alerte incendie majeure en utilisant exclusivement les concepts des Sciences Numériques et Technologie (SNT).
 
-### 4. Structure des activités (Phases)
-Vous pouvez détailler les étapes suivies durant le TP :
-* **Phase 1 :** Localisation précise de l'incendie sur la carte et encodage d'une photo témoin en grille de pixels.
-* **Phase 2 :** Transmission de l'alerte via un réseau physique (simulation de routeurs et de paquets IP).
-* **Phase 3 :** Publication de l'alerte sur le Web urbain et mise à jour de la base de données des incidents (CSV).
-* **Phase 4 :** Prise de décision via des objets connectés et débat sur les enjeux éthiques de la smart city.
+---
 
-### 5. Technologies et Concepts abordés
-Utilisez des mots-clés (tags) pour montrer les compétences acquises :
-* `GPS`, `Pixels/RGB`, `TCP/IP`, `HTML`, `CSV`, `Graphes`, `Objets connectés`.
+## 📜 Scénario
+La ville connectée de **Numéropolis** fait face à une urgence : un incendie a été détecté dans le quartier Nord par des capteurs de température. En tant que **cellule de crise numérique**, notre mission est de localiser le sinistre, de transmettre l'information de manière sécurisée et de coordonner les secours via les infrastructures de la *Smart City*.
 
-### 6. Guide d'utilisation (si vous avez du code)
-Si vous avez ajouté des scripts Python ou des fichiers HTML liés au TP :
-* Expliquez comment lancer les fichiers.
-* Mentionnez les éventuelles dépendances.
+---
+
+## 🎯 Compétences SNT Mobilisées
+Le défi est structuré autour des 7 thèmes du programme de seconde :
+
+| Thème | Concept Clé | Application dans le défi |
+| :--- | :--- | :--- |
+| **Localisation** | Triangulation GPS | Calcul des coordonnées `(latitude, longitude)` du foyer. |
+| **Photographie** | Encodage & Pixels | Numérisation d'une image témoin en grille 8x8 (noir/blanc). |
+| **Internet** | Protocoles TCP/IP | Simulation de routeurs et acheminement de paquets de données. |
+| **Web** | HTML/CSS | Création d'une page d'alerte publique pour les citoyens. |
+| **Données** | Fichiers CSV | Mise à jour de la base de données des incidents urbains. |
+| **Réseaux Sociaux** | Graphes de relations | Analyse de la propagation de l'alerte sur le réseau urbain. |
+| **Embarqué** | Algorithmique | Programmation logique des actionneurs (bornes incendie). |
+
+---
+
+## 🚀 Déroulement du Défi
+
+### 📍 Étape 1 : Localisation & Identification
+* **Objectif :** Identifier le point exact de l'incendie sur le plan de la ville (Grille A-J / 1-8).
+* **Production :** Encodage binaire d'une vignette de fumée détectée par drone.
+
+### 🌐 Étape 2 : Le Réseau Numéropolis
+* **Objectif :** Envoyer l'alerte vers la caserne des pompiers via un réseau de routeurs.
+* **Méthode :** Découpage du message en 3 paquets IP, adressage et gestion des pertes de paquets.
+
+### 📊 Étape 3 : Information & Base de Données
+* **Objectif :** Rédiger le code HTML de la page d'urgence et ajouter l'entrée correspondante dans le fichier `incidents.csv`.
+* **Analyse :** Calcul du degré de séparation sur le graphe social pour toucher un maximum d'habitants.
+
+### 🤖 Étape 4 : Action & Éthique
+* **Objectif :** Définir l'algorithme "Si [Température > 50°C] Alors [Ouvrir vannes]".
+* **Réflexion :** Débat sur les enjeux de la surveillance urbaine et de la protection des données privées.
+
+---
+
+## 🛠️ Matériel utilisé
+- [x] Carte A3 de Numéropolis
+- [x] Cartes événements (Triangulation, Paquets IP)
+- [x] Grille de pixel art 8x8
+- [x] Graphes de réseaux sociaux papier
+
+---
+
+## 👥 Membres de la cellule de crise
+* **Nom 1** (@username) - Spécialiste Réseaux
+* **Nom 2** (@username) - Analyste de Données
+* **Nom 3** (@username) - Développeur Web
+* **Nom 4** (@username) - Responsable Systèmes Embarqués
+
+---
+*Ce projet a été réalisé dans le cadre du cours de SNT (Sciences Numériques et Technologie) - Lycée [Nom de votre lycée].*
