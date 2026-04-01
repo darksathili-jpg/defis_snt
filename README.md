@@ -63,4 +63,4 @@ Le défi est structuré autour des 7 thèmes du programme de seconde :
 * **Nom 4** (@username) - Responsable Systèmes Embarqués
 
 ---
-*Ce projet a été réalisé dans le cadre du cours de SNT (Sciences Numériques et Technologie) - Lycée [Nom de votre lycée].*
+*Ce projet a été réalisé dans le cadre du cours de SNT (Sciences Numériques et Technologie) - Lycée Watteau de Valenciennes.*
