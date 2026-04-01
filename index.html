@@ -1,0 +1,2111 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TP Débranché — Défis Numérique Urbain | SNT Seconde</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+Dirt&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════
+       VARIABLES CSS — CHARTE GRAPHIQUE
+    ═══════════════════════════════════════════════════════ */
+    :root {
+      --bg-main:    #1a1f2e;
+      --bg-panel:   #242b3d;
+      --bg-cours:   #1e2538;
+      --accent:     #8ca5b4;
+      --accent-or:  #c9a84c;
+      --accent-vert:#4caf50;
+      --accent-rouge:#ef5350;
+      --accent-violet:#9c7fc0;
+      --text-main:  #d4dde4;
+      --text-muted: #8a9ab0;
+      --font-titre: 'Rubik Dirt', cursive;
+      --font-corps: 'Source Serif 4', Georgia, serif;
+      --font-code:  'JetBrains Mono', monospace;
+      --radius:     0.5rem;
+      --shadow:     0 4px 24px rgba(0,0,0,0.4);
+      --transition: 0.25s ease;
+    }
+
+    [data-theme="light"] {
+      --bg-main:    #f0f3f8;
+      --bg-panel:   #ffffff;
+      --bg-cours:   #e8edf5;
+      --accent:     #4a6fa5;
+      --accent-or:  #a07820;
+      --accent-vert:#2e7d32;
+      --accent-rouge:#c62828;
+      --accent-violet:#6a4c9c;
+      --text-main:  #1a2030;
+      --text-muted: #4a5568;
+      --shadow:     0 4px 24px rgba(0,0,0,0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-corps);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      transition: background-color var(--transition), color var(--transition);
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-titre);
+      letter-spacing: 0.02em;
+      color: var(--text-main);
+      font-weight: lighter;
+    }
+
+    h1 { font-size: clamp(1.8rem, 4vw, 3rem); }
+    h2 { font-size: clamp(1.4rem, 3vw, 2rem); }
+    h3 { font-size: clamp(1.1rem, 2.5vw, 1.5rem); }
+    h4 { font-size: 1.1rem; }
+    p { margin-bottom: 1rem; }
+
+    code {
+      font-family: var(--font-code);
+      font-size: 0.9em;
+      background: var(--bg-panel);
+      border: 1px solid var(--accent);
+      border-radius: 3px;
+      padding: 0.1em 0.4em;
+      color: var(--accent-or);
+    }
+
+    a { color: var(--accent); text-decoration: underline; }
+    a:hover { color: var(--accent-or); }
+
+    /* ═══════════════════════════════════════════════════════
+       NAVIGATION STICKY
+    ═══════════════════════════════════════════════════════ */
+    .nav-principale {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--bg-panel);
+      border-bottom: 2px solid var(--accent);
+      padding: 0.6rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      box-shadow: var(--shadow);
+      font-family: var(--font-code);
+      font-size: 0.82rem;
+    }
+
+    .nav-titre {
+      font-family: var(--font-titre);
+      font-size: 1rem;
+      color: var(--accent);
+    }
+
+    .nav-phases {
+      display: flex;
+      gap: 0.3rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-phases a {
+      background: var(--bg-main);
+      color: var(--text-muted);
+      border: 1px solid var(--text-muted);
+      border-radius: var(--radius);
+      padding: 0.2rem 0.55rem;
+      text-decoration: none;
+      transition: all var(--transition);
+      font-size: 0.78rem;
+    }
+
+    .nav-phases a:hover {
+      background: var(--accent);
+      color: var(--bg-main);
+      border-color: var(--accent);
+    }
+
+    .nav-controls {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .btn-theme {
+      background: none;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      border-radius: var(--radius);
+      padding: 0.25rem 0.6rem;
+      cursor: pointer;
+      font-family: var(--font-code);
+      font-size: 0.8rem;
+      transition: all var(--transition);
+    }
+    .btn-theme:hover { background: var(--accent); color: var(--bg-main); }
+
+    /* ═══════════════════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════════════════ */
+    .hero {
+      background: linear-gradient(135deg, var(--bg-panel) 0%, var(--bg-cours) 60%, var(--bg-main) 100%);
+      border-bottom: 3px solid var(--accent);
+      padding: 3rem 1.5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg, transparent, transparent 30px,
+        rgba(140,165,180,0.03) 30px, rgba(140,165,180,0.03) 31px
+      );
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--bg-main);
+      font-family: var(--font-code);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.8rem;
+      border-radius: 2rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .hero-badge-debranche {
+      display: inline-block;
+      background: var(--accent-or);
+      color: var(--bg-main);
+      font-family: var(--font-code);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.8rem;
+      border-radius: 2rem;
+      margin-bottom: 1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-left: 0.5rem;
+    }
+
+    .hero h1 { margin-bottom: 0.5rem; }
+
+    .hero-sous-titre {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .hero-meta {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      font-family: var(--font-code);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .hero-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       CONTENEUR
+    ═══════════════════════════════════════════════════════ */
+    .conteneur-principal {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2rem 1.2rem 4rem;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       PHASES
+    ═══════════════════════════════════════════════════════ */
+    .phase {
+      margin-bottom: 4rem;
+      scroll-margin-top: 80px;
+    }
+
+    .phase-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .phase-numero {
+      background: var(--accent);
+      color: var(--bg-main);
+      font-family: var(--font-code);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.3rem 0.7rem;
+      border-radius: var(--radius);
+      white-space: nowrap;
+    }
+
+    .phase-numero.or { background: var(--accent-or); }
+    .phase-numero.vert { background: var(--accent-vert); }
+    .phase-numero.violet { background: var(--accent-violet); }
+
+    .phase-duree {
+      font-family: var(--font-code);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-left: auto;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       ENCADRÉS
+    ═══════════════════════════════════════════════════════ */
+    .encadre,
+    .encadre-conseil,
+    .encadre-indice,
+    .encadre-exercice,
+    .encadre-correction,
+    .encadre-materiel,
+    .encadre-debranche,
+    .encadre-debat {
+      border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      transition: box-shadow var(--transition);
+    }
+
+    .encadre {
+      background: var(--bg-cours);
+      border-left: 4px solid var(--accent);
+    }
+
+    .encadre-conseil {
+      background: var(--bg-cours);
+      border-left: 4px solid var(--accent-or);
+    }
+
+    .encadre-indice {
+      background: var(--bg-cours);
+      border-left: 4px solid var(--accent-vert);
+    }
+
+    .encadre-exercice {
+      background: var(--bg-panel);
+      border: 1px solid var(--accent);
+      border-top: 4px solid var(--accent);
+    }
+
+    .encadre-correction {
+      background: var(--bg-panel);
+      border: 1px solid var(--accent-vert);
+      border-top: 4px solid var(--accent-vert);
+    }
+
+    .encadre-materiel {
+      background: var(--bg-cours);
+      border-left: 4px solid var(--accent-or);
+    }
+
+    .encadre-debranche {
+      background: var(--bg-panel);
+      border: 2px dashed var(--accent-or);
+      border-radius: var(--radius);
+    }
+
+    .encadre-debat {
+      background: var(--bg-cours);
+      border-left: 4px solid var(--accent-violet);
+    }
+
+    .encadre-prefix {
+      font-family: var(--font-code);
+      font-size: 0.72rem;
+      font-variant: small-caps;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+
+    .encadre > .encadre-prefix { color: var(--accent); }
+    .encadre-conseil > .encadre-prefix { color: var(--accent-or); }
+    .encadre-indice > .encadre-prefix { color: var(--accent-vert); }
+    .encadre-exercice > .encadre-prefix { color: var(--accent); }
+    .encadre-correction > .encadre-prefix { color: var(--accent-vert); }
+    .encadre-materiel > .encadre-prefix { color: var(--accent-or); }
+    .encadre-debranche > .encadre-prefix { color: var(--accent-or); }
+    .encadre-debat > .encadre-prefix { color: var(--accent-violet); }
+
+    /* ═══════════════════════════════════════════════════════
+       BOUTONS
+    ═══════════════════════════════════════════════════════ */
+    .btn-tp,
+    .btn-tp-or,
+    .btn-tp-vert,
+    .btn-tp-violet,
+    .btn-secondaire {
+      font-family: var(--font-code);
+      font-size: 0.83rem;
+      border: none;
+      border-radius: var(--radius);
+      padding: 0.45rem 1rem;
+      cursor: pointer;
+      transition: all var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin: 0.25rem 0.25rem 0.25rem 0;
+    }
+
+    .btn-tp { background: var(--accent); color: var(--bg-main); }
+    .btn-tp:hover { filter: brightness(1.15); transform: translateY(-1px); }
+    .btn-tp-or { background: var(--accent-or); color: var(--bg-main); }
+    .btn-tp-or:hover { filter: brightness(1.15); transform: translateY(-1px); }
+    .btn-tp-vert { background: var(--accent-vert); color: var(--bg-main); }
+    .btn-tp-vert:hover { filter: brightness(1.15); transform: translateY(-1px); }
+    .btn-tp-violet { background: var(--accent-violet); color: var(--bg-main); }
+    .btn-tp-violet:hover { filter: brightness(1.15); transform: translateY(-1px); }
+    .btn-secondaire { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+    .btn-secondaire:hover { background: var(--accent); color: var(--bg-main); }
+
+    .btn-correction-verrou {
+      font-family: var(--font-code);
+      font-size: 0.83rem;
+      border-radius: var(--radius);
+      padding: 0.45rem 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin: 0.25rem 0.25rem 0.25rem 0;
+      background: var(--bg-panel);
+      color: var(--text-muted);
+      border: 1px dashed var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .btn-correction-debloque {
+      font-family: var(--font-code);
+      font-size: 0.83rem;
+      border: none;
+      border-radius: var(--radius);
+      padding: 0.45rem 1rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin: 0.25rem 0.25rem 0.25rem 0;
+      background: var(--accent-vert);
+      color: var(--bg-main);
+      transition: all var(--transition);
+      animation: deblocageApparu 0.5s ease both;
+    }
+    .btn-correction-debloque:hover { filter: brightness(1.15); transform: translateY(-1px); }
+
+    @keyframes deblocageApparu {
+      from { opacity: 0; transform: scale(0.92); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       BLOCS MASQUABLES
+    ═══════════════════════════════════════════════════════ */
+    .bloc-masquable { display: none; margin-top: 0.75rem; }
+    .bloc-masquable.visible { display: block; }
+
+    /* ═══════════════════════════════════════════════════════
+       TABLEAUX
+    ═══════════════════════════════════════════════════════ */
+    .tableau-csv,
+    .tableau-graphe,
+    .tableau-bilan {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-code);
+      font-size: 0.85rem;
+      margin: 1rem 0;
+    }
+
+    .tableau-csv th,
+    .tableau-graphe th,
+    .tableau-bilan th {
+      background: var(--accent);
+      color: var(--bg-main);
+      padding: 0.5rem 0.8rem;
+      text-align: left;
+      font-variant: small-caps;
+      letter-spacing: 0.08em;
+    }
+
+    .tableau-csv td,
+    .tableau-graphe td,
+    .tableau-bilan td {
+      background: var(--bg-cours);
+      padding: 0.4rem 0.8rem;
+      border-bottom: 1px solid var(--bg-panel);
+      color: var(--text-main);
+    }
+
+    .tableau-csv tr:nth-child(even) td,
+    .tableau-graphe tr:nth-child(even) td,
+    .tableau-bilan tr:nth-child(even) td {
+      background: var(--bg-panel);
+    }
+
+    .tableau-bilan th { background: var(--accent-or); }
+
+    /* ═══════════════════════════════════════════════════════
+       GRILLE PIXELS
+    ═══════════════════════════════════════════════════════ */
+    .grille-pixels {
+      display: inline-grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 2px;
+      border: 2px solid var(--accent);
+      padding: 4px;
+      background: var(--bg-panel);
+      border-radius: var(--radius);
+      margin: 1rem auto;
+    }
+
+    .pixel {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--bg-cours);
+      background: white;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+
+    .pixel.noir { background: #1a1f2e; }
+    .pixel.gris { background: #8a9ab0; }
+
+    .grille-label {
+      font-family: var(--font-code);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 0.3rem;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       GRAPHE RÉSEAU SVG
+    ═══════════════════════════════════════════════════════ */
+    .conteneur-graphe {
+      background: var(--bg-panel);
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 1rem;
+      margin: 1rem 0;
+      overflow-x: auto;
+      text-align: center;
+    }
+
+    .graphe-svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       CARTE GPS
+    ═══════════════════════════════════════════════════════ */
+    .carte-gps {
+      background: var(--bg-panel);
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 1rem;
+      margin: 1rem 0;
+      overflow-x: auto;
+      text-align: center;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       CHRONOMETRE PHASE
+    ═══════════════════════════════════════════════════════ */
+    .chrono-phase {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--bg-panel);
+      border: 1px solid var(--accent-or);
+      border-radius: var(--radius);
+      padding: 0.8rem 1.2rem;
+      margin-bottom: 1.5rem;
+      font-family: var(--font-code);
+      flex-wrap: wrap;
+    }
+
+    .chrono-display {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--accent-or);
+      min-width: 5rem;
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
+
+    .chrono-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      flex: 1;
+    }
+
+    .chrono-btns { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+    /* ═══════════════════════════════════════════════════════
+       PANNEAU MOT DE PASSE
+    ═══════════════════════════════════════════════════════ */
+    .panneau-mdp {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(10,12,20,0.82);
+      backdrop-filter: blur(6px);
+      animation: fonduEntree 0.2s ease;
+    }
+
+    @keyframes fonduEntree { from { opacity:0; } to { opacity:1; } }
+
+    .panneau-mdp-carte {
+      background: var(--bg-panel);
+      border: 2px solid var(--accent-or);
+      border-radius: var(--radius);
+      padding: 2rem 2.2rem;
+      width: min(420px, 92vw);
+      box-shadow: 0 8px 48px rgba(0,0,0,0.6);
+      animation: carteEntree 0.25s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+
+    @keyframes carteEntree {
+      from { opacity:0; transform: scale(0.9) translateY(12px); }
+      to   { opacity:1; transform: scale(1)   translateY(0); }
+    }
+
+    .panneau-mdp-titre {
+      font-family: var(--font-titre);
+      font-size: 1.1rem;
+      color: var(--accent-or);
+      margin-bottom: 0.4rem;
+    }
+
+    .panneau-mdp-sous {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 1.2rem;
+      font-family: var(--font-code);
+    }
+
+    .panneau-mdp-input {
+      width: 100%;
+      background: var(--bg-main);
+      border: 1.5px solid var(--accent);
+      border-radius: var(--radius);
+      color: var(--text-main);
+      font-family: var(--font-code);
+      font-size: 1rem;
+      padding: 0.55rem 0.9rem;
+      outline: none;
+      margin-bottom: 0.7rem;
+      letter-spacing: 0.15em;
+      transition: border-color var(--transition);
+    }
+    .panneau-mdp-input:focus { border-color: var(--accent-or); }
+    .panneau-mdp-input.erreur {
+      border-color: #ef5350;
+      animation: trembler 0.35s ease;
+    }
+
+    @keyframes trembler {
+      0%,100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+
+    .panneau-mdp-erreur {
+      font-family: var(--font-code);
+      font-size: 0.8rem;
+      color: #ef5350;
+      margin-bottom: 0.7rem;
+      min-height: 1.1rem;
+    }
+
+    .panneau-mdp-actions {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .btn-deblocage-global {
+      font-family: var(--font-code);
+      font-size: 0.75rem;
+      background: transparent;
+      border: 1px solid var(--text-muted);
+      color: var(--text-muted);
+      border-radius: var(--radius);
+      padding: 0.3rem 0.7rem;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .btn-deblocage-global:hover { border-color: var(--accent-or); color: var(--accent-or); }
+
+    /* ═══════════════════════════════════════════════════════
+       TOAST
+    ═══════════════════════════════════════════════════════ */
+    .toast-deblocage {
+      position: fixed;
+      bottom: 5rem;
+      right: 1.5rem;
+      z-index: 1100;
+      background: var(--accent-vert);
+      color: var(--bg-main);
+      font-family: var(--font-code);
+      font-size: 0.85rem;
+      padding: 0.7rem 1.2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      max-width: 290px;
+    }
+
+    .toast-deblocage.visible {
+      display: flex;
+      animation: toastEntree 0.35s ease both;
+    }
+
+    @keyframes toastEntree {
+      from { opacity:0; transform: translateX(20px); }
+      to   { opacity:1; transform: translateX(0); }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       LISTES
+    ═══════════════════════════════════════════════════════ */
+    .liste-exercice {
+      counter-reset: exo;
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .liste-exercice li {
+      counter-increment: exo;
+      padding-left: 2.4rem;
+      position: relative;
+      margin-bottom: 0.6rem;
+    }
+
+    .liste-exercice li::before {
+      content: counter(exo);
+      position: absolute;
+      left: 0;
+      top: 0.05rem;
+      background: var(--accent);
+      color: var(--bg-main);
+      width: 1.6rem;
+      height: 1.6rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-code);
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       TAGS THÈMES
+    ═══════════════════════════════════════════════════════ */
+    .tag-theme {
+      display: inline-block;
+      font-family: var(--font-code);
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 2rem;
+      margin: 0.1rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .tag-internet { background: rgba(140,165,180,0.2); color: var(--accent); border: 1px solid var(--accent); }
+    .tag-web { background: rgba(201,168,76,0.15); color: var(--accent-or); border: 1px solid var(--accent-or); }
+    .tag-rs { background: rgba(156,127,192,0.15); color: var(--accent-violet); border: 1px solid var(--accent-violet); }
+    .tag-donnees { background: rgba(76,175,80,0.15); color: var(--accent-vert); border: 1px solid var(--accent-vert); }
+    .tag-localisation { background: rgba(239,83,80,0.15); color: var(--accent-rouge); border: 1px solid var(--accent-rouge); }
+    .tag-embarque { background: rgba(140,165,180,0.2); color: var(--accent); border: 1px solid var(--accent-or); }
+    .tag-photo { background: rgba(201,168,76,0.15); color: var(--accent-or); border: 1px solid var(--accent-violet); }
+
+    /* ═══════════════════════════════════════════════════════
+       ZONE SAISIE PAPIER (simulée)
+    ═══════════════════════════════════════════════════════ */
+    .zone-saisie {
+      width: 100%;
+      background: var(--bg-main);
+      border: 1.5px solid var(--accent);
+      border-radius: var(--radius);
+      color: var(--text-main);
+      font-family: var(--font-code);
+      font-size: 0.9rem;
+      padding: 0.7rem 1rem;
+      min-height: 80px;
+      resize: vertical;
+      outline: none;
+      transition: border-color var(--transition);
+      margin: 0.5rem 0;
+    }
+    .zone-saisie:focus { border-color: var(--accent-or); }
+
+    /* ═══════════════════════════════════════════════════════
+       BARRE DE PROGRESSION
+    ═══════════════════════════════════════════════════════ */
+    .barre-progression {
+      background: var(--bg-panel);
+      border: 1px solid var(--accent);
+      border-radius: 2rem;
+      height: 8px;
+      margin: 0.5rem 0 1.5rem;
+      overflow: hidden;
+    }
+
+    .barre-progression-fill {
+      background: linear-gradient(90deg, var(--accent), var(--accent-or));
+      height: 100%;
+      border-radius: 2rem;
+      transition: width 0.5s ease;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       CARTE EVENEMENT
+    ═══════════════════════════════════════════════════════ */
+    .carte-evenement {
+      background: var(--bg-panel);
+      border: 2px solid var(--accent-or);
+      border-radius: var(--radius);
+      padding: 1rem 1.2rem;
+      margin: 0.5rem 0;
+      font-family: var(--font-code);
+      font-size: 0.85rem;
+      position: relative;
+    }
+
+    .carte-evenement::before {
+      content: '📋 CARTE ÉVÉNEMENT';
+      display: block;
+      font-size: 0.65rem;
+      color: var(--accent-or);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.4rem;
+    }
+
+    .carte-evenement-titre {
+      color: var(--accent-or);
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.3rem;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════════════ */
+    .footer {
+      background: var(--bg-panel);
+      border-top: 2px solid var(--accent);
+      padding: 1.5rem;
+      text-align: center;
+      font-family: var(--font-code);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════════════════ */
+    @media (max-width: 600px) {
+      .nav-phases { display: none; }
+      .hero { padding: 2rem 1rem 1.5rem; }
+      .chrono-display { font-size: 1.4rem; }
+      .pixel { width: 24px; height: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     NAVIGATION
+════════════════════════════════════════ -->
+<nav class="nav-principale" role="navigation" aria-label="Navigation principale">
+  <span class="nav-titre">🏙️ Défis Numérique Urbain</span>
+  <div class="nav-phases">
+    <a href="#intro">Intro</a>
+    <a href="#phase1">① Localisation</a>
+    <a href="#phase2">② Réseaux</a>
+    <a href="#phase3">③ Web & RS</a>
+    <a href="#phase4">④ Embarqué</a>
+    <a href="#bilan">Bilan</a>
+  </div>
+  <div class="nav-controls">
+    <button class="btn-theme" id="btn-theme" aria-label="Changer de thème">☀️ Clair</button>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<header class="hero">
+  <span class="hero-badge">SNT — Seconde</span>
+  <span class="hero-badge-debranche">✂️ 100% Débranché</span>
+  <h1>Défis Numérique Urbain</h1>
+  <p class="hero-sous-titre">Simuler un écosystème connecté pour alerter la ville… sans aucun ordinateur</p>
+  <div class="hero-meta">
+    <span>⏱ Durée : 1h30</span>
+    <span>👥 Groupes de 4–5 élèves</span>
+    <span>📚 7 thèmes SNT</span>
+    <span>📄 Matériel : papier &amp; cartes</span>
+  </div>
+</header>
+
+<!-- ════════════════════════════════════════
+     CONTENEUR PRINCIPAL
+════════════════════════════════════════ -->
+<main class="conteneur-principal">
+
+  <!-- ── INTRODUCTION ────────────────────── -->
+  <section class="phase" id="intro">
+    <div class="phase-header">
+      <span class="phase-numero">INTRODUCTION</span>
+      <h2>Scénario &amp; Objectifs</h2>
+      <span class="phase-duree">⏱ 5 min</span>
+    </div>
+
+    <div class="encadre">
+      <span class="encadre-prefix">🏙️ Scénario</span>
+      <p>La ville de <strong>Numéropolis</strong> est équipée de capteurs connectés (caméras, détecteurs de pollution, thermomètres…). Un incendie vient d'être repéré dans le quartier Nord. Votre groupe est la <strong>cellule de crise numérique</strong> : vous devez faire circuler l'alerte, la localiser précisément, la publier sur le réseau social urbain et décider de l'action à mener — le tout sans aucun appareil numérique !</p>
+    </div>
+
+    <div class="encadre-conseil">
+      <span class="encadre-prefix">🎯 Objectifs pédagogiques</span>
+      <p>Réviser les <strong>7 thèmes SNT</strong> par simulation physique :</p>
+      <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem;">
+        <span class="tag-theme tag-internet">Internet &amp; Réseaux</span>
+        <span class="tag-theme tag-web">Web</span>
+        <span class="tag-theme tag-rs">Réseaux sociaux</span>
+        <span class="tag-theme tag-donnees">Données</span>
+        <span class="tag-theme tag-localisation">Localisation GPS</span>
+        <span class="tag-theme tag-embarque">Embarqué</span>
+        <span class="tag-theme tag-photo">Photo numérique</span>
+      </div>
+    </div>
+
+    <div class="encadre-materiel">
+      <span class="encadre-prefix">🎒 Matériel distribué par l'enseignant·e</span>
+      <ul style="padding-left:1.2rem;margin-top:0.5rem;">
+        <li>📐 Carte de Numéropolis imprimée (A3)</li>
+        <li>🃏 Cartes événements (découpées ci-dessous)</li>
+        <li>⬛ Grille pixels 8×8 à colorier (ci-dessous)</li>
+        <li>📊 Feuilles CSV vierges</li>
+        <li>🗒️ Post-its (3 couleurs : bleu, jaune, vert)</li>
+        <li>✏️ Stylos, feutres, règle</li>
+        <li>🧶 Ficelle pour simuler les liens réseau (optionnel)</li>
+        <li>🎲 Dés à 6 faces (×2 par groupe)</li>
+      </ul>
+    </div>
+
+    <div class="encadre-indice">
+      <span class="encadre-prefix">📋 Organisation des phases</span>
+      <table class="tableau-bilan">
+        <thead>
+          <tr>
+            <th>Phase</th>
+            <th>Thèmes</th>
+            <th>Durée</th>
+            <th>Activité</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>①</code></td>
+            <td><span class="tag-theme tag-localisation">GPS</span> <span class="tag-theme tag-photo">Photo</span></td>
+            <td>20 min</td>
+            <td>Localiser l'incendie + Encoder la photo</td>
+          </tr>
+          <tr>
+            <td><code>②</code></td>
+            <td><span class="tag-theme tag-internet">Internet</span></td>
+            <td>25 min</td>
+            <td>Faire circuler l'alerte (paquets TCP/IP)</td>
+          </tr>
+          <tr>
+            <td><code>③</code></td>
+            <td><span class="tag-theme tag-web">Web</span> <span class="tag-theme tag-donnees">Données</span> <span class="tag-theme tag-rs">RS</span></td>
+            <td>25 min</td>
+            <td>Page Web papier + CSV + Graphe social</td>
+          </tr>
+          <tr>
+            <td><code>④</code></td>
+            <td><span class="tag-theme tag-embarque">Embarqué</span></td>
+            <td>20 min</td>
+            <td>Objets connectés + Débat éthique</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Barre de progression globale -->
+    <div style="font-family:var(--font-code);font-size:0.75rem;color:var(--text-muted);margin-bottom:0.3rem;">
+      Progression globale du TP
+    </div>
+    <div class="barre-progression">
+      <div class="barre-progression-fill" id="barre-prog" style="width:0%"></div>
+    </div>
+  </section>
+
+  <!-- ── PHASE 1 : LOCALISATION + PHOTO ──── -->
+  <section class="phase" id="phase1">
+    <div class="phase-header">
+      <span class="phase-numero">PHASE 1</span>
+      <h2>Localisation GPS &amp; Photo numérique</h2>
+      <span class="phase-duree">⏱ 20 min</span>
+    </div>
+
+    <!-- Chronomètre -->
+    <div class="chrono-phase">
+      <div class="chrono-display" id="chrono1">20:00</div>
+      <div class="chrono-label">
+        <strong>Chronomètre Phase 1</strong><br>
+        <span style="font-size:0.75rem;">Appuyez sur ▶ pour démarrer</span>
+      </div>
+      <div class="chrono-btns">
+        <button class="btn-tp-or" onclick="demarrerChrono(1,20)">▶ Démarrer</button>
+        <button class="btn-secondaire" onclick="resetChrono(1,20)">↺ Reset</button>
+      </div>
+    </div>
+
+    <div class="encadre">
+      <span class="encadre-prefix">🛰️ Thème — Localisation GPS</span>
+      <p>Le GPS (Global Positioning System) détermine la position d'un point sur Terre grâce à des signaux émis par des <strong>satellites</strong>. En mesurant le temps de trajet du signal de 3 satellites au minimum, on calcule les coordonnées <code>(latitude, longitude)</code> par <strong>triangulation</strong>.</p>
+      <p>Coordonnées GPS : <code>latitude</code> (Nord/Sud, entre -90° et +90°) et <code>longitude</code> (Est/Ouest, entre -180° et +180°).</p>
+    </div>
+
+    <!-- Carte de Numéropolis -->
+    <div class="encadre-exercice">
+      <span class="encadre-prefix">🗺️ Exercice 1.1 — La carte de Numéropolis</span>
+      <p>Voici la grille-plan de <strong>Numéropolis</strong>. Chaque case fait 100m × 100m. L'axe X représente la longitude (de A à J) et l'axe Y la latitude (de 1 à 8).</p>
+
+      <div class="carte-gps">
+        <svg viewBox="0 0 500 420" class="graphe-svg" style="max-width:500px;" xmlns="http://www.w3.org/2000/svg">
+          <!-- Grille -->
+          <defs>
+            <pattern id="quadrillage" width="44" height="44" patternUnits="userSpaceOnUse" x="36" y="20">
+              <path d="M 44 0 L 0 0 0 44" fill="none" stroke="white" stroke-width="2"/>
+            </pattern>
+          </defs>
+          <rect x="36" y="20" width="440" height="352" fill="#1e2538" rx="4"/>
+          <rect x="36" y="20" width="440" height="352" fill="url(#quadrillage)" stroke="white" stroke-width="2"/>
+
+          <!-- Légendes X -->
+          <g font-family="JetBrains Mono, monospace" font-size="13" fill="#FF0000" text-anchor="middle">
+            <text x="58"  y="15">A</text>
+            <text x="102" y="15">B</text>
+            <text x="146" y="15">C</text>
+            <text x="190" y="15">D</text>
+            <text x="234" y="15">E</text>
+            <text x="278" y="15">F</text>
+            <text x="322" y="15">G</text>
+            <text x="366" y="15">H</text>
+            <text x="410" y="15">I</text>
+            <text x="454" y="15">J</text>
+          </g>
+
+          <!-- Légendes Y -->
+          <g font-family="JetBrains Mono, monospace" font-size="13" fill="#FF0000" text-anchor="end">
+            <text x="32" y="48">1</text>
+            <text x="32" y="92">2</text>
+            <text x="32" y="136">3</text>
+            <text x="32" y="180">4</text>
+            <text x="32" y="224">5</text>
+            <text x="32" y="268">6</text>
+            <text x="32" y="312">7</text>
+            <text x="32" y="356">8</text>
+          </g>
+
+          <!-- Bâtiments (zones grises) -->
+          <rect x="80"  y="65"  width="88" height="44" fill="#FF3850" rx="3"/>
+          <rect x="200" y="65"  width="66" height="66" fill="#FF3850" rx="3"/>
+          <rect x="300" y="110" width="88" height="44" fill="#FF3850" rx="3"/>
+          <rect x="80"  y="200" width="44" height="88" fill="#FF3850" rx="3"/>
+          <rect x="350" y="220" width="66" height="66" fill="#FF3850" rx="3"/>
+          <rect x="160" y="265" width="110" height="66" fill="#FF3850" rx="3"/>
+
+          <!-- Parc -->
+          <rect x="300" y="265" width="44" height="44" fill="#1a3320" rx="3"/>
+          <text x="322" y="291" text-anchor="middle" font-size="18">🌳</text>
+
+          <!-- Mairie -->
+          <rect x="235" y="175" width="44" height="44" fill="#2a3560" rx="3" stroke="#8ca5b4" stroke-width="1.5"/>
+          <text x="257" y="196" text-anchor="middle" font-size="10" fill="#8ca5b4" font-family="JetBrains Mono,monospace">MAIRIE</text>
+
+          <!-- Pompiers -->
+          <rect x="390" y="330" width="44" height="44" fill="#3a1515" rx="3" stroke="#ef5350" stroke-width="1.5"/>
+          <text x="412" y="356" text-anchor="middle" font-size="16">🚒</text>
+
+          <!-- Incendie -->
+          <circle cx="146" cy="313" r="14" fill="rgba(239,83,80,0.25)" stroke="#ef5350" stroke-width="2"/>
+          <text x="146" y="318" text-anchor="middle" font-size="18">🔥</text>
+          <text x="146" y="338" text-anchor="middle" font-size="9" fill="#ef5350" font-family="JetBrains Mono,monospace">INCENDIE !</text>
+
+          <!-- Satellites (hors carte) -->
+          <text x="480" y="40"  font-size="18" text-anchor="middle">🛰️</text>
+          <text x="480" y="56"  font-size="8" fill="#8a9ab0" text-anchor="middle" font-family="JetBrains Mono,monospace">SAT-1</text>
+          <text x="20"  y="200" font-size="18" text-anchor="middle">🛰️</text>
+          <text x="20"  y="216" font-size="8" fill="#8a9ab0" text-anchor="middle" font-family="JetBrains Mono,monospace">SAT-2</text>
+          <text x="480" y="380" font-size="18" text-anchor="middle">🛰️</text>
+          <text x="480" y="396" font-size="8" fill="#8a9ab0" text-anchor="middle" font-family="JetBrains Mono,monospace">SAT-3</text>
+
+          <!-- Lignes de triangulation -->
+          <line x1="478" y1="42"  x2="146" y2="313" stroke="#ef5350" stroke-width="1" stroke-dasharray="5,4" opacity="0.4"/>
+          <line x1="22"  y1="200" x2="146" y2="313" stroke="#ef5350" stroke-width="1" stroke-dasharray="5,4" opacity="0.4"/>
+          <line x1="478" y1="378" x2="146" y2="313" stroke="#ef5350" stroke-width="1" stroke-dasharray="5,4" opacity="0.4"/>
+        </svg>
+        <p style="font-family:var(--font-code);font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem;">🗺️ Plan de Numéropolis — Les lignes pointillées représentent les signaux satellites</p>
+      </div>
+
+      <ol class="liste-exercice">
+        <li>Repère la position de l'incendie 🔥 sur la carte. Quelles sont ses coordonnées sur la grille ? (lettre, chiffre)</li>
+        <li>Explique en une phrase pourquoi on a besoin d'<em>au moins 3 satellites</em> pour localiser un point.</li>
+        <li>Si SAT-1 mesure un délai de 0,004 s et SAT-2 mesure 0,006 s (la lumière parcourt ~300 000 km/s), quelle est la distance approximative entre chaque satellite et l'incendie ? Calcule sur papier.</li>
+      </ol>
+
+      <button class="btn-correction-verrou" id="btn-correction-1-1">🔒 Correction (enseignant)</button>
+      <div class="bloc-masquable encadre-correction" id="bloc-correction-1-1">
+        <span class="encadre-prefix">✅ Correction 1.1</span>
+        <ol>
+          <li>L'incendie est en case <strong>(C, 7)</strong> — colonne C, ligne 7.</li>
+          <li>Avec 1 satellite on obtient une sphère de possibilités, avec 2 une intersection (cercle), avec 3 on obtient un point unique (ou 2 points, dont un éliminé car hors Terre).</li>
+          <li>Distance SAT-1 : 300 000 × 0,004 = <strong>1 200 km</strong>. Distance SAT-2 : 300 000 × 0,006 = <strong>1 800 km</strong>.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Exercice Photo numérique -->
+    <div class="encadre-exercice">
+      <span class="encadre-prefix">📷 Exercice 1.2 — Encoder la photo de l'incendie</span>
+
+      <div class="encadre" style="margin-bottom:1rem;">
+        <span class="encadre-prefix">📚 Rappel — Pixel &amp; Compression</span>
+        <p>Une image numérique est une grille de <strong>pixels</strong>. Chaque pixel possède une valeur de couleur (ex. 0 = blanc, 1 = gris, 2 = noir pour 2 bits). La <strong>compression RLE</strong> (Run-Length Encoding) encode les séquences répétées : <code>5B 3N</code> = 5 blancs puis 3 noirs.</p>
+      </div>
+
+      <p>Voici la photo 8×8 de la zone incendie, déjà partiellement complétée. Chaque case = 1 pixel. Code : <code>B</code>=Blanc, <code>G</code>=Gris, <code>N</code>=Noir.</p>
+
+      <div style="text-align:center;margin:1rem 0;">
+        <div class="grille-label">Grille 8×8 — Photo zone incendie (à compléter sur papier)</div>
+        <div class="grille-pixels" id="grille-photo">
+          <!-- 8 lignes × 8 colonnes, cliquables pour simulation -->
+        </div>
+        <p style="font-family:var(--font-code);font-size:0.72rem;color:var(--text-muted);margin-top:0.5rem;">Cliquez sur une case pour la faire basculer Blanc → Gris → Noir (simulation écran seulement)</p>
+      </div>
+
+      <p>La grille modèle à reproduire sur papier (lecture ligne par ligne) :</p>
+      <div style="font-family:var(--font-code);font-size:0.8rem;background:var(--bg-main);border:1px solid var(--accent);border-radius:var(--radius);padding:0.8rem;margin:0.5rem 0;line-height:2;">
+        L1: B B B B B B B B<br>
+        L2: B B B G G B B B<br>
+        L3: B B G N N G B B<br>
+        L4: B G N N N N G B<br>
+        L5: B G N N N N G B<br>
+        L6: B B G N N G B B<br>
+        L7: B B B G G B B B<br>
+        L8: B B B B B B B B
+      </div>
+
+      <ol class="liste-exercice">
+        <li>Colorie la grille 8×8 selon le modèle ci-dessus (sur ta feuille papier).</li>
+        <li>Encode les lignes L3 et L4 en compression RLE.</li>
+        <li>Combien de pixels contient cette image ? Combien de bits faut-il si on code chaque pixel sur 2 bits ?</li>
+        <li>Quel objet la photo représente-t-elle ? (indice : regarde la forme globale)</li>
+      </ol>
+
+      <button class="btn-correction-verrou" id="btn-correction-1-2">🔒 Correction (enseignant)</button>
+      <div class="bloc-masquable encadre-correction" id="bloc-correction-1-2">
+        <span class="encadre-prefix">✅ Correction 1.2</span>
+        <ol>
+          <li>Grille complétée selon le modèle. <em>(vérification visuelle par l'enseignant·e)</em></li>
+          <li>L3 : <code>2B 1G 2N 1G 2B</code> — L4 : <code>1B 1G 4N 1G 1B</code></li>
+          <li>8 × 8 = <strong>64 pixels</strong>. Sur 2 bits : 64 × 2 = <strong>128 bits</strong> soit 16 octets.</li>
+          <li>La forme représente un <strong>cercle / halo</strong> (comme la zone de chaleur de l'incendie vue du ciel).</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PHASE 2 : RÉSEAUX ────────────────── -->
+  <section class="phase" id="phase2">
+    <div class="phase-header">
+      <span class="phase-numero or">PHASE 2</span>
+      <h2>Réseaux &amp; Internet — Le paquet voyage</h2>
+      <span class="phase-duree">⏱ 25 min</span>
+    </div>
+
+    <div class="chrono-phase">
+      <div class="chrono-display" id="chrono2">25:00</div>
+      <div class="chrono-label">
+        <strong>Chronomètre Phase 2</strong><br>
+        <span style="font-size:0.75rem;">Jeu de rôle réseau humain</span>
+      </div>
+      <div class="chrono-btns">
+        <button class="btn-tp-or" onclick="demarrerChrono(2,25)">▶ Démarrer</button>
+        <button class="btn-secondaire" onclick="resetChrono(2,25)">↺ Reset</button>
+      </div>
+    </div>
+
+    <div class="encadre">
+      <span class="encadre-prefix">🌐 Thème — Internet &amp; Protocole TCP/IP</span>
+      <p>Sur Internet, les données sont découpées en <strong>paquets</strong>. Chaque paquet contient : une <em>adresse source</em>, une <em>adresse destination</em>, un <em>numéro d'ordre</em> et une <em>charge utile</em> (les données). Les <strong>routeurs</strong> acheminent les paquets de proche en proche. Le protocole <strong>TCP</strong> garantit la réception de tous les paquets et demande le renvoi des paquets perdus.</p>
+    </div>
+
+    <!-- Graphe réseau -->
+    <div class="encadre-exercice">
+      <span class="encadre-prefix">🔌 Exercice 2.1 — Le graphe du réseau de Numéropolis</span>
+      <p>Voici le réseau de communication de la ville. Les <strong>nœuds</strong> sont des routeurs (R1 à R6), les <strong>arêtes</strong> sont des câbles. Les chiffres indiquent la <em>latence</em> (délai en ms).</p>
+
+      <div class="conteneur-graphe">
+        <svg viewBox="0 0 520 300" class="graphe-svg" style="max-width:520px;" xmlns="http://www.w3.org/2000/svg">
+          <!-- Arêtes / câbles -->
+          <line x1="100" y1="80"  x2="220" y2="80"  stroke="#3a4560" stroke-width="3"/>
+          <line x1="220" y1="80"  x2="340" y2="80"  stroke="#3a4560" stroke-width="3"/>
+          <line x1="340" y1="80"  x2="440" y2="150" stroke="#3a4560" stroke-width="3"/>
+          <line x1="100" y1="80"  x2="100" y2="220" stroke="#3a4560" stroke-width="3"/>
+          <line x1="100" y1="220" x2="220" y2="220" stroke="#3a4560" stroke-width="3"/>
+          <line x1="220" y1="220" x2="340" y2="220" stroke="#3a4560" stroke-width="3"/>
+          <line x1="340" y1="220" x2="440" y2="150" stroke="#3a4560" stroke-width="3"/>
+          <line x1="220" y1="80"  x2="220" y2="220" stroke="#3a4560" stroke-width="3"/>
+          <line x1="340" y1="80"  x2="340" y2="220" stroke="#3a4560" stroke-width="3"/>
+          <!-- Câble "rompu" -->
+          <line x1="100" y1="80"  x2="220" y2="220" stroke="#ef5350" stroke-width="2" stroke-dasharray="6,4" opacity="0.6"/>
+
+          <!-- Labels latences -->
+          <g font-family="JetBrains Mono, monospace" font-size="10" fill="#8a9ab0">
+            <text x="155" y="72">10ms</text>
+            <text x="275" y="72">8ms</text>
+            <text x="392" y="108">12ms</text>
+            <text x="64"  y="155">5ms</text>
+            <text x="155" y="240">7ms</text>
+            <text x="275" y="240">9ms</text>
+            <text x="392" y="205">6ms</text>
+            <text x="228" y="155">4ms</text>
+            <text x="348" y="155">11ms</text>
+            <text x="148" y="170" fill="#ef5350">⚡ ROMPU</text>
+          </g>
+
+          <!-- Nœuds -->
+          <g>
+            <!-- R1 = Source (incendie) -->
+            <circle cx="100" cy="80" r="22" fill="#3a1515" stroke="#ef5350" stroke-width="2"/>
+            <text x="100" y="76" text-anchor="middle" font-size="9" fill="#ef5350" font-family="JetBrains Mono,monospace" font-weight="600">R1</text>
+            <text x="100" y="88" text-anchor="middle" font-size="8" fill="#ef5350" font-family="JetBrains Mono,monospace">🔥SOURCE</text>
+
+            <!-- R2 -->
+            <circle cx="220" cy="80" r="22" fill="#242b3d" stroke="#8ca5b4" stroke-width="2"/>
+            <text x="220" y="84" text-anchor="middle" font-size="11" fill="#8ca5b4" font-family="JetBrains Mono,monospace" font-weight="600">R2</text>
+
+            <!-- R3 -->
+            <circle cx="340" cy="80" r="22" fill="#242b3d" stroke="#8ca5b4" stroke-width="2"/>
+            <text x="340" y="84" text-anchor="middle" font-size="11" fill="#8ca5b4" font-family="JetBrains Mono,monospace" font-weight="600">R3</text>
+
+            <!-- R4 = Destination (pompiers) -->
+            <circle cx="440" cy="150" r="22" fill="#1a3320" stroke="#4caf50" stroke-width="2"/>
+            <text x="440" y="146" text-anchor="middle" font-size="9" fill="#4caf50" font-family="JetBrains Mono,monospace" font-weight="600">R4</text>
+            <text x="440" y="158" text-anchor="middle" font-size="8" fill="#4caf50" font-family="JetBrains Mono,monospace">🚒DEST.</text>
+
+            <!-- R5 -->
+            <circle cx="100" cy="220" r="22" fill="#242b3d" stroke="#8ca5b4" stroke-width="2"/>
+            <text x="100" y="224" text-anchor="middle" font-size="11" fill="#8ca5b4" font-family="JetBrains Mono,monospace" font-weight="600">R5</text>
+
+            <!-- R6 -->
+            <circle cx="220" cy="220" r="22" fill="#242b3d" stroke="#8ca5b4" stroke-width="2"/>
+            <text x="220" y="224" text-anchor="middle" font-size="11" fill="#8ca5b4" font-family="JetBrains Mono,monospace" font-weight="600">R6</text>
+
+            <!-- R7 -->
+            <circle cx="340" cy="220" r="22" fill="#242b3d" stroke="#8ca5b4" stroke-width="2"/>
+            <text x="340" y="224" text-anchor="middle" font-size="11" fill="#8ca5b4" font-family="JetBrains Mono,monospace" font-weight="600">R7</text>
+          </g>
+        </svg>
+        <p style="font-family:var(--font-code);font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem;">🔴 Ligne pointillée = lien R1–R6 rompu. 🟢 R4 = destination (caserne pompiers)</p>
+      </div>
+
+      <ol class="liste-exercice">
+        <li>Quels sont les <strong>deux plus courts chemins</strong> de R1 (incendie) à R4 (pompiers) en nombre de sauts (ignorer le lien rompu) ?</li>
+        <li>Calcule la <strong>latence totale</strong> du chemin le plus rapide (en ms).</li>
+        <li>Le lien R1–R6 est rompu : qu'est-ce que cela montre sur la <strong>robustesse</strong> d'Internet ?</li>
+      </ol>
+
+      <button class="btn-correction-verrou" id="btn-correction-2-1">🔒 Correction (enseignant)</button>
+      <div class="bloc-masquable encadre-correction" id="bloc-correction-2-1">
+        <span class="encadre-prefix">✅ Correction 2.1</span>
+        <ol>
+          <li>Chemin A : <strong>R1 → R2 → R3 → R4</strong> (3 sauts) — Chemin B : <strong>R1 → R2 → R6 → R7 → R4</strong> (4 sauts)</li>
+          <li>Chemin A : 10 + 8 + 12 = <strong>30 ms</strong>. C'est le plus rapide.</li>
+          <li>Internet est un réseau <strong>maillé</strong> : si un lien tombe, les paquets empruntent automatiquement un autre chemin. C'est le principe de <em>tolérance aux pannes</em>.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Jeu de rôle TCP/IP -->
+    <div class="encadre-debranche">
+      <span class="encadre-prefix">🎭 Jeu de Rôle — Simulation TCP/IP (toute la classe)</span>
+      <p><strong>Rôles :</strong></p>
+      <ul style="padding-left:1.2rem;margin-bottom:0.8rem;">
+        <li>1 élève = <strong>Source R1</strong> (envoie les paquets)</li>
+        <li>1 élève = <strong>Destination R4</strong> (pompiers)</li>
+        <li>Les autres = <strong>Routeurs R2, R3, R5, R6, R7</strong></li>
+      </ul>
+      <p><strong>Déroulement :</strong></p>
+      <ol style="padding-left:1.2rem;">
+        <li>R1 découpe le message d'alerte en <strong>3 paquets</strong> (boulettes de papier numérotées 1, 2, 3). Chaque paquet contient : <em>n°, source, destination, message</em>.</li>
+        <li>Chaque routeur reçoit le paquet et le transmet au routeur suivant selon la table de routage ci-dessous.</li>
+        <li>L'enseignant·e peut "couper" un lien (retirer le routeur du jeu) pour simuler une panne : les routeurs doivent contourner.</li>
+        <li>Si un paquet arrive abîmé (froissé), R4 demande le renvoi (simulation <strong>ACK/NACK</strong>).</li>
+        <li>R4 reconstitue le message dans l'ordre des numéros.</li>
+      </ol>
+
+      <div class="encadre-indice" style="margin-top:1rem;">
+        <span class="encadre-prefix">📋 Table de routage simplifiée</span>
+        <table class="tableau-csv">
+          <thead><tr><th>Routeur</th><th>Pour R4, passer par</th></tr></thead>
+          <tbody>
+            <tr><td>R1</td><td>R2</td></tr>
+            <tr><td>R2</td><td>R3</td></tr>
+            <tr><td>R3</td><td>R4 (direct)</td></tr>
+            <tr><td>R5</td><td>R6</td></tr>
+            <tr><td>R6</td><td>R7</td></tr>
+            <tr><td>R7</td><td>R4 (direct)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="encadre-exercice">
+      <span class="encadre-prefix">📝 Exercice 2.2 — Tracer le chemin</span>
+      <p>Après le jeu de rôle, complète la trace de l'acheminement de tes 3 paquets :</p>
+      <table class="tableau-csv">
+        <thead>
+          <tr><th>Paquet</th><th>Chemin emprunté</th><th>Latence totale</th><th>Reçu ?</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>📦 Paquet 1</td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="R1 → ... → R4" style="min-height:36px;padding:0.3rem 0.5rem;"></textarea></td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="__ ms" style="min-height:36px;padding:0.3rem 0.5rem;"></textarea></td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="Oui / Non" style="min-height:36px;padding:0.3rem 0.5rem;"></textarea></td>
+          </tr>
+          <tr>
+            <td>📦 Paquet 2</td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="R1 → ... → R4" style="min-height:36px;padding:0.3rem 0.5rem;"></textarea></td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="__ ms" style="min-height:36px;padding:0.3rem 0.5rem;"></textarea></td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="Oui / Non" style="min-height:36px;padding:0.3rem 0.5rem;"></textarea></td>
+          </tr>
+          <tr>
+            <td>📦 Paquet 3</td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="R1 → ... → R4" style="min-height:36px;padding:0.3rem 0.5rem;"></textarea></td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="__ ms" style="min-height:36px;padding:0.3rem 0.5rem;"></textarea></td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="Oui / Non" style="min-height:36px;padding:0.3rem 0.5rem;"></textarea></td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-family:var(--font-code);font-size:0.78rem;color:var(--text-muted);">💡 Remplis ce tableau sur ta feuille papier si tu n'as pas de clavier.</p>
+    </div>
+  </section>
+
+  <!-- ── PHASE 3 : WEB + DONNÉES + RS ─────── -->
+  <section class="phase" id="phase3">
+    <div class="phase-header">
+      <span class="phase-numero vert">PHASE 3</span>
+      <h2>Web, Données &amp; Réseaux Sociaux</h2>
+      <span class="phase-duree">⏱ 25 min</span>
+    </div>
+
+    <div class="chrono-phase">
+      <div class="chrono-display" id="chrono3">25:00</div>
+      <div class="chrono-label">
+        <strong>Chronomètre Phase 3</strong><br>
+        <span style="font-size:0.75rem;">Construction page Web + CSV + Graphe RS</span>
+      </div>
+      <div class="chrono-btns">
+        <button class="btn-tp-vert" onclick="demarrerChrono(3,25)">▶ Démarrer</button>
+        <button class="btn-secondaire" onclick="resetChrono(3,25)">↺ Reset</button>
+      </div>
+    </div>
+
+    <!-- Web -->
+    <div class="encadre">
+      <span class="encadre-prefix">🌐 Thème — Le Web &amp; HTML</span>
+      <p>Le <strong>Web</strong> est un service d'Internet permettant d'accéder à des pages via un navigateur. Les pages sont écrites en <strong>HTML</strong> (HyperText Markup Language) avec des <em>balises</em> qui structurent le contenu. Exemple : <code>&lt;h1&gt;Titre&lt;/h1&gt;</code>, <code>&lt;p&gt;paragraphe&lt;/p&gt;</code>, <code>&lt;a href="..."&gt;lien&lt;/a&gt;</code>.</p>
+    </div>
+
+    <div class="encadre-exercice">
+      <span class="encadre-prefix">🖥️ Exercice 3.1 — La page Web d'alerte (sur papier)</span>
+      <p>Construis sur une feuille A4 la maquette d'une page HTML d'alerte incendie. Utilise des <strong>post-its</strong> pour les balises. Chaque post-it = 1 balise avec son contenu.</p>
+
+      <div class="encadre-indice">
+        <span class="encadre-prefix">📋 Structure à reproduire</span>
+        <div style="font-family:var(--font-code);font-size:0.82rem;background:var(--bg-main);border-radius:var(--radius);padding:1rem;line-height:2;border:1px solid var(--accent);">
+          <span style="color:#ef5350;">&lt;html&gt;</span><br>
+          &nbsp;&nbsp;<span style="color:var(--accent-or);">&lt;head&gt;</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--accent);">&lt;title&gt;</span>Alerte Incendie - Numéropolis<span style="color:var(--accent);">&lt;/title&gt;</span><br>
+          &nbsp;&nbsp;<span style="color:var(--accent-or);">&lt;/head&gt;</span><br>
+          &nbsp;&nbsp;<span style="color:var(--accent-vert);">&lt;body&gt;</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--accent);">&lt;h1&gt;</span>🔥 ALERTE INCENDIE<span style="color:var(--accent);">&lt;/h1&gt;</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--accent);">&lt;p&gt;</span>Localisation : Case C7 — Quartier Nord<span style="color:var(--accent);">&lt;/p&gt;</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--accent);">&lt;p&gt;</span>Heure : 14h32 — Niveau : CRITIQUE<span style="color:var(--accent);">&lt;/p&gt;</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--accent);">&lt;img src="incendie.jpg" alt="Photo zone"&gt;</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--accent);">&lt;a href="pompiers.html"&gt;</span>Contacter les pompiers<span style="color:var(--accent);">&lt;/a&gt;</span><br>
+          &nbsp;&nbsp;<span style="color:var(--accent-vert);">&lt;/body&gt;</span><br>
+          <span style="color:#ef5350;">&lt;/html&gt;</span>
+        </div>
+      </div>
+
+      <ol class="liste-exercice">
+        <li>Reproduis cette structure sur papier avec des post-its (1 balise = 1 post-it coloré).</li>
+        <li>Que fait la balise <code>&lt;a href="..."&gt;</code> ? À quoi sert l'attribut <code>href</code> ?</li>
+        <li>Ajoute une balise <code>&lt;table&gt;</code> contenant un tableau à 2 colonnes : "Paramètre" et "Valeur" (avec 3 lignes de données de ton choix).</li>
+      </ol>
+
+      <button class="btn-correction-verrou" id="btn-correction-3-1">🔒 Correction (enseignant)</button>
+      <div class="bloc-masquable encadre-correction" id="bloc-correction-3-1">
+        <span class="encadre-prefix">✅ Correction 3.1</span>
+        <ol>
+          <li><em>Vérification visuelle par l'enseignant·e des post-its organisés correctement.</em></li>
+          <li>La balise <code>&lt;a&gt;</code> crée un <strong>hyperlien</strong>. L'attribut <code>href</code> indique l'<strong>URL de destination</strong> (adresse de la page cible).</li>
+          <li>Exemple : <code>&lt;table&gt;&lt;tr&gt;&lt;th&gt;Paramètre&lt;/th&gt;&lt;th&gt;Valeur&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Température&lt;/td&gt;&lt;td&gt;450°C&lt;/td&gt;&lt;/tr&gt;...&lt;/table&gt;</code></li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Données CSV -->
+    <div class="encadre">
+      <span class="encadre-prefix">📊 Thème — Données &amp; Format CSV</span>
+      <p>Un fichier <strong>CSV</strong> (Comma-Separated Values) stocke des données tabulaires sous forme de texte. Chaque ligne est un enregistrement, les champs sont séparés par des virgules ou des points-virgules. Exemple : <code>nom,latitude,longitude,niveau</code></p>
+    </div>
+
+    <div class="encadre-exercice">
+      <span class="encadre-prefix">📋 Exercice 3.2 — Construire le fichier CSV des alertes</span>
+      <p>Complète manuellement le fichier CSV des 5 événements détectés dans Numéropolis. Les cartes événements sont distribuées par l'enseignant·e.</p>
+
+      <table class="tableau-csv">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>type</th>
+            <th>localisation</th>
+            <th>latitude</th>
+            <th>longitude</th>
+            <th>gravite</th>
+            <th>timestamp</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>001</td>
+            <td>incendie</td>
+            <td>C7</td>
+            <td>50.3512</td>
+            <td>3.5241</td>
+            <td>critique</td>
+            <td>14:32:05</td>
+          </tr>
+          <tr>
+            <td>002</td>
+            <td>pollution</td>
+            <td>F4</td>
+            <td style="color:var(--accent-or);">[à compléter]</td>
+            <td style="color:var(--accent-or);">[à compléter]</td>
+            <td>modérée</td>
+            <td>14:35:18</td>
+          </tr>
+          <tr>
+            <td>003</td>
+            <td>[carte 3]</td>
+            <td>[à compléter]</td>
+            <td>[à compléter]</td>
+            <td>[à compléter]</td>
+            <td>[à compléter]</td>
+            <td>[à compléter]</td>
+          </tr>
+          <tr>
+            <td>004</td>
+            <td>[carte 4]</td>
+            <td>[à compléter]</td>
+            <td>[à compléter]</td>
+            <td>[à compléter]</td>
+            <td>[à compléter]</td>
+            <td>[à compléter]</td>
+          </tr>
+          <tr>
+            <td>005</td>
+            <td>[carte 5]</td>
+            <td>[à compléter]</td>
+            <td>[à compléter]</td>
+            <td>[à compléter]</td>
+            <td>[à compléter]</td>
+            <td>[à compléter]</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="encadre-conseil" style="margin-top:1rem;">
+        <span class="encadre-prefix">🃏 Cartes événements à distribuer (enseignant)</span>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.8rem;margin-top:0.5rem;">
+          <div class="carte-evenement">
+            <div class="carte-evenement-titre">🔥 Incendie bâtiment</div>
+            Position : C7 — Lat: 50.3512 — Long: 3.5241<br>Gravité : Critique — 14h32
+          </div>
+          <div class="carte-evenement">
+            <div class="carte-evenement-titre">💨 Pollution atmosphérique</div>
+            Position : F4 — Lat: 50.3548 — Long: 3.5312<br>Gravité : Modérée — 14h35
+          </div>
+          <div class="carte-evenement">
+            <div class="carte-evenement-titre">🌊 Inondation rue</div>
+            Position : B6 — Lat: 50.3498 — Long: 3.5189<br>Gravité : Élevée — 14h41
+          </div>
+          <div class="carte-evenement">
+            <div class="carte-evenement-titre">⚡ Panne électrique</div>
+            Position : H2 — Lat: 50.3571 — Long: 3.5399<br>Gravité : Faible — 14h50
+          </div>
+          <div class="carte-evenement">
+            <div class="carte-evenement-titre">🚧 Accident route</div>
+            Position : D5 — Lat: 50.3525 — Long: 3.5268<br>Gravité : Élevée — 15h02
+          </div>
+        </div>
+        <p style="font-family:var(--font-code);font-size:0.72rem;color:var(--text-muted);margin-top:0.7rem;">✂️ Imprimez et découpez ces cartes avant le TP.</p>
+      </div>
+
+      <ol class="liste-exercice" style="margin-top:1rem;">
+        <li>Complète le tableau CSV avec les données des cartes événements.</li>
+        <li>Quelle requête permettrait de filtrer uniquement les événements de gravité "critique" ou "élevée" ? Écris-la en pseudo-code : <code>SÉLECTIONNER lignes OÙ gravite = ...</code></li>
+        <li>Trie le CSV par timestamp croissant. Dans quel ordre les événements se sont-ils produits ?</li>
+      </ol>
+
+      <button class="btn-correction-verrou" id="btn-correction-3-2">🔒 Correction (enseignant)</button>
+      <div class="bloc-masquable encadre-correction" id="bloc-correction-3-2">
+        <span class="encadre-prefix">✅ Correction 3.2</span>
+        <ol>
+          <li>CSV complet : voir tableau ci-dessus avec les données des 5 cartes.</li>
+          <li><code>SÉLECTIONNER lignes OÙ gravite = "critique" OU gravite = "élevée"</code> → retourne les lignes 001, 003, 005.</li>
+          <li>Ordre chronologique : 001 (14:32) → 002 (14:35) → 003 (14:41) → 004 (14:50) → 005 (15:02).</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Réseau Social -->
+    <div class="encadre">
+      <span class="encadre-prefix">📱 Thème — Réseaux Sociaux &amp; Graphes</span>
+      <p>Un réseau social peut être modélisé par un <strong>graphe</strong> où chaque personne est un <em>nœud</em> et chaque relation d'amitié/abonnement une <em>arête</em>. La <strong>centralité de degré</strong> d'un nœud = nombre de connexions directes. Plus elle est élevée, plus l'information se propage vite depuis ce nœud.</p>
+    </div>
+
+    <div class="encadre-exercice">
+      <span class="encadre-prefix">🕸️ Exercice 3.3 — Le réseau social de Numéropolis</span>
+      <p>Voici le graphe du réseau social urbain. Les nœuds sont des habitants, les arêtes des abonnements. Une alerte est postée par <strong>Alice</strong>.</p>
+
+      <div class="conteneur-graphe">
+        <svg viewBox="0 0 500 320" class="graphe-svg" style="max-width:500px;" xmlns="http://www.w3.org/2000/svg">
+          <!-- Arêtes -->
+          <line x1="250" y1="80"  x2="130" y2="160" stroke="#3a4560" stroke-width="2"/>
+          <line x1="250" y1="80"  x2="370" y2="160" stroke="#3a4560" stroke-width="2"/>
+          <line x1="250" y1="80"  x2="250" y2="200" stroke="#3a4560" stroke-width="2"/>
+          <line x1="130" y1="160" x2="80"  y2="260" stroke="#3a4560" stroke-width="2"/>
+          <line x1="130" y1="160" x2="180" y2="260" stroke="#3a4560" stroke-width="2"/>
+          <line x1="130" y1="160" x2="250" y2="200" stroke="#3a4560" stroke-width="2"/>
+          <line x1="370" y1="160" x2="320" y2="260" stroke="#3a4560" stroke-width="2"/>
+          <line x1="370" y1="160" x2="420" y2="260" stroke="#3a4560" stroke-width="2"/>
+          <line x1="250" y1="200" x2="320" y2="260" stroke="#3a4560" stroke-width="2"/>
+          <line x1="180" y1="260" x2="320" y2="260" stroke="#3a4560" stroke-width="2"/>
+
+          <!-- Nœuds -->
+          <!-- Alice (centrale) -->
+          <circle cx="250" cy="80"  r="28" fill="#2a1a40" stroke="#9c7fc0" stroke-width="2.5"/>
+          <text x="250" y="76"  text-anchor="middle" font-size="9" fill="#9c7fc0" font-family="JetBrains Mono,monospace" font-weight="600">Alice</text>
+          <text x="250" y="88"  text-anchor="middle" font-size="8" fill="#9c7fc0" font-family="JetBrains Mono,monospace">🔥 ALERTE</text>
+
+          <circle cx="130" cy="160" r="22" fill="#242b3d" stroke="#8ca5b4" stroke-width="2"/>
+          <text x="130" y="164" text-anchor="middle" font-size="9" fill="#8ca5b4" font-family="JetBrains Mono,monospace">Bob</text>
+
+          <circle cx="370" cy="160" r="22" fill="#242b3d" stroke="#8ca5b4" stroke-width="2"/>
+          <text x="370" y="164" text-anchor="middle" font-size="9" fill="#8ca5b4" font-family="JetBrains Mono,monospace">Clara</text>
+
+          <circle cx="250" cy="200" r="22" fill="#242b3d" stroke="#8ca5b4" stroke-width="2"/>
+          <text x="250" y="204" text-anchor="middle" font-size="9" fill="#8ca5b4" font-family="JetBrains Mono,monospace">David</text>
+
+          <circle cx="80"  cy="260" r="18" fill="#242b3d" stroke="#8a9ab0" stroke-width="1.5"/>
+          <text x="80"  y="264" text-anchor="middle" font-size="8" fill="#8a9ab0" font-family="JetBrains Mono,monospace">Eva</text>
+
+          <circle cx="180" cy="260" r="18" fill="#242b3d" stroke="#8a9ab0" stroke-width="1.5"/>
+          <text x="180" y="264" text-anchor="middle" font-size="8" fill="#8a9ab0" font-family="JetBrains Mono,monospace">Frank</text>
+
+          <circle cx="320" cy="260" r="18" fill="#242b3d" stroke="#8a9ab0" stroke-width="1.5"/>
+          <text x="320" y="264" text-anchor="middle" font-size="8" fill="#8a9ab0" font-family="JetBrains Mono,monospace">Gina</text>
+
+          <circle cx="420" cy="260" r="18" fill="#242b3d" stroke="#8a9ab0" stroke-width="1.5"/>
+          <text x="420" y="264" text-anchor="middle" font-size="8" fill="#8a9ab0" font-family="JetBrains Mono,monospace">Hugo</text>
+        </svg>
+      </div>
+
+      <ol class="liste-exercice">
+        <li>Calcule le <strong>degré</strong> de chaque nœud (nombre de liaisons directes). Qui a le plus fort degré ?</li>
+        <li>En combien d'étapes maximum l'alerte d'Alice peut-elle atteindre <em>tous</em> les habitants du réseau ?</li>
+        <li>Si Bob quitte le réseau (on supprime son nœud), le réseau reste-t-il <strong>connexe</strong> ? Justifie.</li>
+        <li>Calcule le nombre total d'arêtes dans ce graphe.</li>
+      </ol>
+
+      <button class="btn-correction-verrou" id="btn-correction-3-3">🔒 Correction (enseignant)</button>
+      <div class="bloc-masquable encadre-correction" id="bloc-correction-3-3">
+        <span class="encadre-prefix">✅ Correction 3.3</span>
+        <ol>
+          <li>Alice : 3 | Bob : 4 | Clara : 3 | David : 3 | Eva : 1 | Frank : 2 | Gina : 3 | Hugo : 1. <strong>Bob a le degré le plus élevé (4)</strong>.</li>
+          <li>Maximum <strong>2 étapes</strong> : Alice → Bob/Clara/David (1 étape) → Eva/Frank/Gina/Hugo (2 étapes).</li>
+          <li>Sans Bob, Eva n'est plus joignable depuis Alice (Eva n'est reliée qu'à Bob). Le réseau n'est <strong>plus connexe</strong>.</li>
+          <li>Compter les arêtes : R1–R2, R1–R3, R1–D, R2–Eva, R2–Frank, R2–D, R3–Gina, R3–Hugo, D–Gina, Frank–Gina = <strong>10 arêtes</strong>.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PHASE 4 : EMBARQUÉ + DÉBAT ─────── -->
+  <section class="phase" id="phase4">
+    <div class="phase-header">
+      <span class="phase-numero violet">PHASE 4</span>
+      <h2>Systèmes Embarqués &amp; Débat Éthique</h2>
+      <span class="phase-duree">⏱ 20 min</span>
+    </div>
+
+    <div class="chrono-phase">
+      <div class="chrono-display" id="chrono4">20:00</div>
+      <div class="chrono-label">
+        <strong>Chronomètre Phase 4</strong><br>
+        <span style="font-size:0.75rem;">Objets connectés + débat citoyen</span>
+      </div>
+      <div class="chrono-btns">
+        <button class="btn-tp-violet" onclick="demarrerChrono(4,20)">▶ Démarrer</button>
+        <button class="btn-secondaire" onclick="resetChrono(4,20)">↺ Reset</button>
+      </div>
+    </div>
+
+    <div class="encadre">
+      <span class="encadre-prefix">🤖 Thème — Systèmes Embarqués &amp; IoT</span>
+      <p>Un <strong>système embarqué</strong> est un ordinateur miniaturisé intégré dans un objet pour accomplir une tâche spécifique. Exemples : détecteur de fumée connecté, capteur de température, caméra de surveillance. L'ensemble des objets connectés forme l'<strong>Internet des Objets</strong> (IoT — Internet of Things). Ces systèmes collectent des données, les transmettent et peuvent déclencher des actions automatiques.</p>
+    </div>
+
+    <div class="encadre-exercice">
+      <span class="encadre-prefix">⚙️ Exercice 4.1 — Modéliser un objet connecté</span>
+      <p>Voici les cartes capteurs des objets déployés dans Numéropolis. Pour chaque capteur, complète le schéma Entrée → Traitement → Sortie sur ta feuille papier.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.8rem;margin:1rem 0;">
+        <div class="carte-evenement" style="border-color:var(--accent-rouge);">
+          <div class="carte-evenement-titre" style="color:var(--accent-rouge);">🔥 Détecteur de fumée</div>
+          <strong>Capteur :</strong> Photoionisation<br>
+          <strong>Seuil d'alerte :</strong> &gt; 200 ppm<br>
+          <strong>Mesure actuelle :</strong> 450 ppm<br>
+          <strong>Action :</strong> ?
+        </div>
+        <div class="carte-evenement" style="border-color:var(--accent-or);">
+          <div class="carte-evenement-titre" style="color:var(--accent-or);">🌡️ Capteur température</div>
+          <strong>Capteur :</strong> Thermistance<br>
+          <strong>Seuil d'alerte :</strong> &gt; 60°C<br>
+          <strong>Mesure actuelle :</strong> 38°C<br>
+          <strong>Action :</strong> ?
+        </div>
+        <div class="carte-evenement" style="border-color:var(--accent-vert);">
+          <div class="carte-evenement-titre" style="color:var(--accent-vert);">💧 Capteur inondation</div>
+          <strong>Capteur :</strong> Conductivité eau<br>
+          <strong>Seuil d'alerte :</strong> &gt; 5 cm hauteur<br>
+          <strong>Mesure actuelle :</strong> 12 cm<br>
+          <strong>Action :</strong> ?
+        </div>
+      </div>
+
+      <ol class="liste-exercice">
+        <li>Pour chaque capteur, détermine si une alerte doit être déclenchée (compare mesure et seuil).</li>
+        <li>Complète le schéma <strong>Entrée → Traitement → Sortie</strong> pour le détecteur de fumée.</li>
+        <li>Écris en <em>pseudo-code</em> l'algorithme de décision du capteur de fumée :<br>
+          <code style="display:block;margin:0.5rem 0;padding:0.5rem;background:var(--bg-main);border-radius:var(--radius);">
+            SI mesure &gt; seuil ALORS<br>
+            &nbsp;&nbsp;...<br>
+            SINON<br>
+            &nbsp;&nbsp;...<br>
+            FIN SI
+          </code>
+        </li>
+        <li>Quel protocole ces capteurs utilisent-ils probablement pour envoyer leurs données ? (indique 2 possibilités)</li>
+      </ol>
+
+      <button class="btn-correction-verrou" id="btn-correction-4-1">🔒 Correction (enseignant)</button>
+      <div class="bloc-masquable encadre-correction" id="bloc-correction-4-1">
+        <span class="encadre-prefix">✅ Correction 4.1</span>
+        <ol>
+          <li>🔥 Fumée : 450 > 200 → <strong>ALERTE</strong>. 🌡️ Température : 38 < 60 → <strong>Pas d'alerte</strong>. 💧 Inondation : 12 > 5 → <strong>ALERTE</strong>.</li>
+          <li>Entrée : signal photoionisation (450 ppm) → Traitement : comparaison avec seuil 200 ppm → Sortie : envoi message d'alerte réseau + activation sirène.</li>
+          <li><code>SI mesure > 200 ALORS envoyer_alerte("fumée", mesure, localisation) SINON attendre(30 secondes) FIN SI</code></li>
+          <li>Protocoles possibles : <strong>Wi-Fi</strong> (IEEE 802.11), <strong>LoRaWAN</strong> (longue portée, faible conso), Zigbee, Bluetooth Low Energy.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Débat éthique -->
+    <div class="encadre-debat">
+      <span class="encadre-prefix">⚖️ Exercice 4.2 — Débat Citoyen : La ville intelligente</span>
+      <p>La ville de Numéropolis envisage de déployer <strong>500 capteurs supplémentaires</strong>, dont des caméras à reconnaissance faciale et des capteurs de bruit dans les espaces publics.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0;">
+        <div class="encadre-indice" style="margin:0;">
+          <span class="encadre-prefix" style="color:var(--accent-vert);">✅ Arguments POUR</span>
+          <ul style="padding-left:1rem;margin-top:0.3rem;">
+            <li>Réponse plus rapide aux urgences</li>
+            <li>Prévention des accidents</li>
+            <li>Optimisation des transports</li>
+            <li>Économies d'énergie</li>
+          </ul>
+        </div>
+        <div class="encadre-conseil" style="margin:0;">
+          <span class="encadre-prefix">⚠️ Arguments CONTRE</span>
+          <ul style="padding-left:1rem;margin-top:0.3rem;">
+            <li>Surveillance de masse</li>
+            <li>Atteinte à la vie privée</li>
+            <li>Biais algorithmiques</li>
+            <li>Données piratables</li>
+          </ul>
+        </div>
+      </div>
+
+      <ol class="liste-exercice">
+        <li><strong>Débat oral (5 min) :</strong> La moitié du groupe défend le projet, l'autre s'y oppose. L'enseignant·e chronomètre.</li>
+        <li>Qui a accès aux données de géolocalisation collectées ? Qui devrait y avoir accès ? Justifie.</li>
+        <li>Qu'est-ce que le <strong>RGPD</strong> ? Comment s'applique-t-il ici ?</li>
+        <li>Propose une solution technique qui permettrait de bénéficier des avantages tout en protégeant la vie privée.</li>
+      </ol>
+
+      <div class="encadre-indice" style="margin-top:1rem;">
+        <span class="encadre-prefix">💡 Pour aller plus loin</span>
+        <p>Le <strong>RGPD</strong> (Règlement Général sur la Protection des Données, 2018) oblige à collecter seulement les données nécessaires (<em>minimisation</em>), à informer les personnes concernées et à obtenir leur consentement. Les données biométriques (visage) sont une <em>catégorie sensible</em> soumise à des règles strictes.</p>
+      </div>
+
+      <button class="btn-correction-verrou" id="btn-correction-4-2">🔒 Correction (enseignant)</button>
+      <div class="bloc-masquable encadre-correction" id="bloc-correction-4-2">
+        <span class="encadre-prefix">✅ Éléments de réponse 4.2</span>
+        <ol>
+          <li><em>Débat oral — évaluation formative par l'enseignant·e.</em></li>
+          <li>Actuellement : la mairie, les opérateurs, les fournisseurs de services. Idéalement : uniquement les services d'urgence avec accès limité et traçable. Les citoyens devraient pouvoir accéder à leurs propres données.</li>
+          <li>Le RGPD impose : consentement, finalité limitée, durée de conservation définie, droit d'accès/suppression. Ici : obligation d'afficher des panneaux, de limiter la durée de stockage des images.</li>
+          <li>Solutions : <em>anonymisation</em> des données dès la collecte (flou sur les visages), traitement local (edge computing) sans envoi au cloud, <em>chiffrement</em> end-to-end, audit indépendant.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BILAN ─────────────────────────────── -->
+  <section class="phase" id="bilan">
+    <div class="phase-header">
+      <span class="phase-numero">BILAN</span>
+      <h2>Synthèse &amp; Évaluation</h2>
+      <span class="phase-duree">⏱ fin de séance</span>
+    </div>
+
+    <div class="encadre-conseil">
+      <span class="encadre-prefix">🏆 Rendu final du groupe</span>
+      <p>À remettre à l'enseignant·e en fin de séance :</p>
+      <ol style="padding-left:1.2rem;margin-top:0.5rem;">
+        <li>📐 Carte de Numéropolis avec localisation GPS annotée et chemins réseau tracés</li>
+        <li>⬛ Grille 8×8 coloriée (photo de l'incendie)</li>
+        <li>🖥️ Feuille A4 "Page Web papier" avec post-its</li>
+        <li>📊 Tableau CSV complété avec les 5 événements</li>
+        <li>🕸️ Graphe du réseau social annoté (degrés calculés)</li>
+        <li>📝 Fiche bilan : <em>1 concept retenu par thème + 1 enjeu éthique identifié</em></li>
+      </ol>
+    </div>
+
+    <div class="encadre">
+      <span class="encadre-prefix">📋 Fiche Bilan — À compléter individuellement</span>
+      <table class="tableau-bilan">
+        <thead>
+          <tr>
+            <th>Thème SNT</th>
+            <th>Un concept clé retenu</th>
+            <th>Un exemple concret du TP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tag-theme tag-localisation">Localisation</span></td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="ex : triangulation GPS" style="min-height:32px;padding:0.2rem 0.4rem;font-size:0.8rem;"></textarea></td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="ex : localiser l'incendie en C7" style="min-height:32px;padding:0.2rem 0.4rem;font-size:0.8rem;"></textarea></td>
+          </tr>
+          <tr>
+            <td><span class="tag-theme tag-photo">Photo numérique</span></td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="ex : pixel, RLE" style="min-height:32px;padding:0.2rem 0.4rem;font-size:0.8rem;"></textarea></td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="ex : grille 8x8" style="min-height:32px;padding:0.2rem 0.4rem;font-size:0.8rem;"></textarea></td>
+          </tr>
+          <tr>
+            <td><span class="tag-theme tag-internet">Internet</span></td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="ex : paquet TCP/IP" style="min-height:32px;padding:0.2rem 0.4rem;font-size:0.8rem;"></textarea></td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="ex : jeu de rôle routeurs" style="min-height:32px;padding:0.2rem 0.4rem;font-size:0.8rem;"></textarea></td>
+          </tr>
+          <tr>
+            <td><span class="tag-theme tag-web">Web</span></td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="ex : balise HTML" style="min-height:32px;padding:0.2rem 0.4rem;font-size:0.8rem;"></textarea></td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="ex : page alerte papier" style="min-height:32px;padding:0.2rem 0.4rem;font-size:0.8rem;"></textarea></td>
+          </tr>
+          <tr>
+            <td><span class="tag-theme tag-donnees">Données</span></td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="ex : format CSV" style="min-height:32px;padding:0.2rem 0.4rem;font-size:0.8rem;"></textarea></td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="ex : tableau des alertes" style="min-height:32px;padding:0.2rem 0.4rem;font-size:0.8rem;"></textarea></td>
+          </tr>
+          <tr>
+            <td><span class="tag-theme tag-rs">Réseaux sociaux</span></td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="ex : centralité de degré" style="min-height:32px;padding:0.2rem 0.4rem;font-size:0.8rem;"></textarea></td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="ex : graphe de Numéropolis" style="min-height:32px;padding:0.2rem 0.4rem;font-size:0.8rem;"></textarea></td>
+          </tr>
+          <tr>
+            <td><span class="tag-theme tag-embarque">Embarqué</span></td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="ex : IoT, capteur" style="min-height:32px;padding:0.2rem 0.4rem;font-size:0.8rem;"></textarea></td>
+            <td><textarea class="zone-saisie" rows="1" placeholder="ex : détecteur de fumée" style="min-height:32px;padding:0.2rem 0.4rem;font-size:0.8rem;"></textarea></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="encadre-debat">
+      <span class="encadre-prefix">✍️ Enjeu éthique identifié (1 paragraphe)</span>
+      <textarea class="zone-saisie" rows="4" placeholder="Rédige en quelques phrases l'enjeu éthique qui t'a le plus interpellé·e pendant ce TP, et ta position personnelle argumentée..."></textarea>
+    </div>
+
+    <div class="encadre-indice">
+      <span class="encadre-prefix">🌟 Autoévaluation du groupe</span>
+      <p>Sur ta feuille papier, note de 1 à 5 votre maîtrise de chaque thème :</p>
+      <div style="font-family:var(--font-code);font-size:0.8rem;background:var(--bg-main);border-radius:var(--radius);padding:0.8rem;margin-top:0.5rem;line-height:2.2;">
+        Localisation GPS   : ⭐ __ / 5<br>
+        Photo numérique    : ⭐ __ / 5<br>
+        Internet / Réseaux : ⭐ __ / 5<br>
+        Web / HTML         : ⭐ __ / 5<br>
+        Données / CSV      : ⭐ __ / 5<br>
+        Réseaux sociaux    : ⭐ __ / 5<br>
+        Systèmes embarqués : ⭐ __ / 5
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer class="footer">
+  <p>🏙️ TP Défis Numérique Urbain — SNT Seconde &nbsp;|&nbsp; ✂️ Mode 100% Débranché &nbsp;|&nbsp; Consultez ce document sur votre téléphone, tout le reste se fait sur papier !</p>
+  <p style="margin-top:0.3rem;">Thèmes couverts : Internet · Web · Réseaux Sociaux · Données · Localisation · Embarqué · Photo numérique</p>
+</footer>
+
+<!-- ════════════════════════════════════════
+     TOAST
+════════════════════════════════════════ -->
+<div class="toast-deblocage" id="toast-deblocage" role="alert" aria-live="polite">
+  <span>✅</span>
+  <span id="toast-message">Correction débloquée !</span>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  /* ═══════════════════════════════════════════════
+     THÈME CLAIR / SOMBRE
+  ═══════════════════════════════════════════════ */
+  var btnTheme = document.getElementById('btn-theme');
+  var html = document.documentElement;
+
+  function appliquerTheme(t) {
+    html.setAttribute('data-theme', t);
+    btnTheme.textContent = t === 'dark' ? '☀️ Clair' : '🌙 Sombre';
+    try { localStorage.setItem('snt-theme', t); } catch(e) {}
+  }
+
+  try {
+    var themeStocke = localStorage.getItem('snt-theme');
+    if (themeStocke) appliquerTheme(themeStocke);
+  } catch(e) {}
+
+  btnTheme.addEventListener('click', function() {
+    appliquerTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+
+  /* ═══════════════════════════════════════════════
+     GRILLE PIXELS INTERACTIVE
+  ═══════════════════════════════════════════════ */
+  var grilleEl = document.getElementById('grille-photo');
+  if (grilleEl) {
+    var etats = ['blanc', 'gris', 'noir'];
+    for (var i = 0; i < 64; i++) {
+      var px = document.createElement('div');
+      px.className = 'pixel';
+      px.dataset.etat = '0';
+      px.addEventListener('click', (function(el) {
+        return function() {
+          var e = parseInt(el.dataset.etat);
+          e = (e + 1) % 3;
+          el.dataset.etat = e;
+          el.className = 'pixel ' + (e === 0 ? '' : e === 1 ? 'gris' : 'noir');
+        };
+      })(px));
+      grilleEl.appendChild(px);
+    }
+  }
+
+  /* ═══════════════════════════════════════════════
+     CHRONOMETRES
+  ═══════════════════════════════════════════════ */
+  var chronos = {};
+
+  window.demarrerChrono = function(id, minutes) {
+    if (chronos[id] && chronos[id].interval) clearInterval(chronos[id].interval);
+    var restant = minutes * 60;
+    var el = document.getElementById('chrono' + id);
+    if (!el) return;
+
+    function maj() {
+      var m = Math.floor(restant / 60);
+      var s = restant % 60;
+      el.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+      el.style.color = restant <= 60 ? 'var(--accent-rouge)' : 'var(--accent-or)';
+    }
+
+    maj();
+    chronos[id] = {
+      interval: setInterval(function() {
+        restant--;
+        maj();
+        if (restant <= 0) {
+          clearInterval(chronos[id].interval);
+          el.textContent = '⏰ TEMPS !';
+          el.style.color = 'var(--accent-rouge)';
+          afficherToast('⏰ Phase ' + id + ' — Temps écoulé !');
+          mettreAJourProgression();
+        }
+      }, 1000)
+    };
+    mettreAJourProgression();
+  };
+
+  window.resetChrono = function(id, minutes) {
+    if (chronos[id] && chronos[id].interval) clearInterval(chronos[id].interval);
+    var el = document.getElementById('chrono' + id);
+    if (el) {
+      el.style.color = 'var(--accent-or)';
+      var m = minutes;
+      el.textContent = (m < 10 ? '0' : '') + m + ':00';
+    }
+  };
+
+  /* ═══════════════════════════════════════════════
+     PROGRESSION
+  ═══════════════════════════════════════════════ */
+  function mettreAJourProgression() {
+    var total = 6; // nombre de corrections
+    var debloques = document.querySelectorAll('.btn-correction-debloque').length;
+    var pct = Math.round((debloques / total) * 100);
+    var barre = document.getElementById('barre-prog');
+    if (barre) barre.style.width = pct + '%';
+  }
+
+  /* ═══════════════════════════════════════════════
+     TOGGLE BLOCS MASQUABLES
+  ═══════════════════════════════════════════════ */
+  window.toggleBloc = function(cid) {
+    var bloc = document.getElementById('bloc-' + cid);
+    if (!bloc) return;
+    bloc.classList.toggle('visible');
+  };
+
+  /* ═══════════════════════════════════════════════
+     TOAST
+  ═══════════════════════════════════════════════ */
+  var toastEl   = document.getElementById('toast-deblocage');
+  var toastMsg  = document.getElementById('toast-message');
+  var toastTO   = null;
+
+  window.afficherToast = function(msg) {
+    if (!toastEl) return;
+    toastMsg.textContent = msg;
+    toastEl.classList.add('visible');
+    clearTimeout(toastTO);
+    toastTO = setTimeout(function() { toastEl.classList.remove('visible'); }, 3500);
+  };
+
+  /* ═══════════════════════════════════════════════
+     SYSTÈME DÉBLOCAGE CORRECTIONS (MOT DE PASSE)
+  ═══════════════════════════════════════════════ */
+  var MOT_DE_PASSE = 'numeopolis2025';
+  var CLE_STORAGE  = 'snt-debranche-corrections';
+
+  function chargerDeblocages() {
+    try { return JSON.parse(localStorage.getItem(CLE_STORAGE) || '{}'); }
+    catch(e) { return {}; }
+  }
+
+  function sauvegarderDeblocage(cid) {
+    try {
+      var d = chargerDeblocages();
+      d[cid] = true;
+      localStorage.setItem(CLE_STORAGE, JSON.stringify(d));
+    } catch(e) {}
+  }
+
+  function activerBouton(cid) {
+    var btn = document.getElementById('btn-' + cid);
+    if (!btn || btn.classList.contains('btn-correction-debloque')) return;
+    btn.className = 'btn-correction-debloque';
+    btn.disabled  = false;
+    btn.innerHTML = '✅ Voir la correction';
+    btn.onclick   = function() { toggleBloc(cid); };
+    mettreAJourProgression();
+  }
+
+  function debloquerCorrection(cid, message) {
+    activerBouton(cid);
+    sauvegarderDeblocage(cid);
+    afficherToast(message || 'Correction débloquée !');
+  }
+
+  function debloquerTout() {
+    var ids = ['correction-1-1','correction-1-2','correction-2-1','correction-3-1','correction-3-2','correction-3-3','correction-4-1','correction-4-2'];
+    ids.forEach(function(cid) { activerBouton(cid); });
+    try {
+      var tous = {};
+      ids.forEach(function(c) { tous[c] = true; });
+      localStorage.setItem(CLE_STORAGE, JSON.stringify(tous));
+    } catch(e) {}
+    afficherToast('Toutes les corrections débloquées.');
+  }
+
+  /* Panneau MDP */
+  var panneauActuel = null;
+
+  function ouvrirPanneau(cid) {
+    if (document.getElementById('panneau-mdp-overlay')) return;
+    panneauActuel = cid;
+    var estGlobal = (cid === 'TOUT');
+    var div = document.createElement('div');
+    div.className = 'panneau-mdp';
+    div.id = 'panneau-mdp-overlay';
+    div.innerHTML =
+      '<div class="panneau-mdp-carte">'
+      + '<div class="panneau-mdp-titre">🔒 Accès enseignant</div>'
+      + '<div class="panneau-mdp-sous">' + (estGlobal ? 'Débloquer <em>toutes</em> les corrections' : 'Débloquer la correction') + '</div>'
+      + '<input type="password" class="panneau-mdp-input" id="panneau-mdp-saisie" placeholder="Mot de passe enseignant" autocomplete="off"/>'
+      + '<div class="panneau-mdp-erreur" id="panneau-mdp-erreur"></div>'
+      + '<div class="panneau-mdp-actions">'
+      + '<button class="btn-secondaire" id="panneau-mdp-annuler">Annuler</button>'
+      + '<button class="btn-tp-or" id="panneau-mdp-valider">Valider</button>'
+      + '</div></div>';
+
+    document.body.appendChild(div);
+
+    var inp = document.getElementById('panneau-mdp-saisie');
+    var err = document.getElementById('panneau-mdp-erreur');
+
+    setTimeout(function() { if(inp) inp.focus(); }, 80);
+
+    function fermer() {
+      var el = document.getElementById('panneau-mdp-overlay');
+      if (el) el.remove();
+      panneauActuel = null;
+    }
+
+    function valider() {
+      var saisi = (inp.value || '').trim().toLowerCase();
+      if (saisi === MOT_DE_PASSE) {
+        fermer();
+        if (cid === 'TOUT') debloquerTout();
+        else debloquerCorrection(cid, 'Correction débloquée !');
+      } else {
+        err.textContent = 'Mot de passe incorrect.';
+        inp.classList.add('erreur');
+        inp.value = '';
+        setTimeout(function() { inp.classList.remove('erreur'); }, 400);
+        setTimeout(function() { if(inp) inp.focus(); }, 80);
+      }
+    }
+
+    document.getElementById('panneau-mdp-valider').addEventListener('click', valider);
+    document.getElementById('panneau-mdp-annuler').addEventListener('click', fermer);
+    inp.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') valider();
+      if (e.key === 'Escape') fermer();
+      if (err.textContent) err.textContent = '';
+    });
+    div.addEventListener('click', function(e) { if(e.target === div) fermer(); });
+  }
+
+  function attacherBoutonsVerrou() {
+    document.querySelectorAll('.btn-correction-verrou').forEach(function(btn) {
+      var cid = btn.id.replace('btn-', '');
+      btn.addEventListener('click', function() { ouvrirPanneau(cid); });
+    });
+  }
+
+  function ajouterBoutonGlobal() {
+    var nav = document.querySelector('.nav-controls');
+    if (!nav) return;
+    var btn = document.createElement('button');
+    btn.className = 'btn-deblocage-global';
+    btn.innerHTML = '🔓 Enseignant';
+    btn.title = 'Débloquer toutes les corrections';
+    btn.addEventListener('click', function() { ouvrirPanneau('TOUT'); });
+    nav.insertBefore(btn, nav.firstChild);
+  }
+
+  /* ═══════════════════════════════════════════════
+     INIT
+  ═══════════════════════════════════════════════ */
+  function init() {
+    var deblocages = chargerDeblocages();
+    ['correction-1-1','correction-1-2','correction-2-1','correction-3-1','correction-3-2','correction-3-3','correction-4-1','correction-4-2'].forEach(function(cid) {
+      if (deblocages[cid]) activerBouton(cid);
+    });
+    attacherBoutonsVerrou();
+    ajouterBoutonGlobal();
+    mettreAJourProgression();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+</script>
+
+</body>
+</html>
